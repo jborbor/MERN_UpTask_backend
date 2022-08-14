@@ -29,6 +29,7 @@ const usuarioSchema = mongoose.Schema({
     timestamps: true,
 }
 );
+
 usuarioSchema.pre('save', async function (next) {
     if (!this.isModified("password")) {
         next();
@@ -36,6 +37,10 @@ usuarioSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
 });
+
+usuarioSchema.methods.comprobarPassword = async function (passwordForm) {
+    return await bcrypt.compare(passwordForm, this.password);
+}
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);
 export default Usuario;
