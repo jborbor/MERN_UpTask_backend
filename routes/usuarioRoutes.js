@@ -19,7 +19,10 @@ router.get("/confirmar/:token", confirmar); // Confirmacion tokend de usuario
 router.post("/olvide-password", olvidePassword); // recuperar contraseña
 
 // Comprobar token y generar nueva contraseña
-router.route("/olvide-password/:token").get(comprobarToken).post(nuevoPassword);
+router
+    .route("/olvide-password/:token")
+    .get(comprobarToken)
+    .post(nuevoPassword);
 
 router.get('/perfil', checkAuth, perfil);
 
